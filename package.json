@@ -15,6 +15,10 @@
   "author": "Mahdi",
   "license": "MIT License",
   "description": "",
+  "dependencies": {
+    "count-decimals": "1.0.0",
+    "mathjs": "^13.2.0"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "jest": "^29.7.0",
