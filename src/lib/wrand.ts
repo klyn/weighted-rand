@@ -2,7 +2,7 @@
 import { countDecimals } from "count-decimals";
 import { gcd } from "mathjs";
 import { shuffle as fastShuffle } from "fast-shuffle";
-import { isObject } from "../utils";
+import { assertType, isObject } from "../utils";
 
 /**
  * Type to represent probabilities
@@ -43,8 +43,13 @@ export function wrand(
     return false;
   }
 
-  // - get the list of IDs from our weights object
+  // - get the list of IDs and weights from weights object
   const ids = Object.keys(weights);
+  const weightValues = Object.values(weights);
+
+  // - check if all IDs & weights have expected types
+  ids.forEach((value) => assertType(value, "string"));
+  weightValues.forEach((value) => assertType(value, "number"));
 
   // - if the weights object contains only one element,
   //   return the ID

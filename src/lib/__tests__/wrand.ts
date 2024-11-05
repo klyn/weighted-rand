@@ -16,6 +16,11 @@ const testData3: Weights = {
   C: 3,
 };
 
+const testData4: Weights = {
+  A: "1" as any,
+  B: "2" as any,
+};
+
 const testData2Map: Array<string> = ["A", "A", "B", "C"];
 const testData3Map: Array<string> = ["A", "B", "C"];
 const testData3MapNonGCD: Array<string> = [
@@ -75,4 +80,9 @@ test("wrand shuffles the map at least once when requested", () => {
   // sort and then check equality to make sure it was indeed
   // the expected map
   expect(result.sort()).toEqual(testData2Map);
+});
+
+test("wrand should throw an exception if weights are not numerical", () => {
+  const result = () => wrand(testData4);
+  expect(result).toThrow(TypeError);
 });
