@@ -1,4 +1,4 @@
-import { wrand, Weights } from "../core";
+import { wrand, Weights } from "../wrand";
 
 const testData1: Weights = {
   a: 1,

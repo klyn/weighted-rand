@@ -2,7 +2,7 @@
 import { countDecimals } from "count-decimals";
 import { gcd } from "mathjs";
 import { shuffle as fastShuffle } from "fast-shuffle";
-import { isObject } from "./utils";
+import { isObject } from "../utils";
 
 /**
  * Type to represent probabilities

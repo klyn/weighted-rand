@@ -1,4 +1,4 @@
-import { Weights, wrand } from "./core";
+import { Weights, wrand } from "./lib/wrand";
 
 export {
   // types
