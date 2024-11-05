@@ -10,7 +10,25 @@ const testData2: Weights = {
   C: 1,
 };
 
+const testData3: Weights = {
+  A: 3,
+  B: 3,
+  C: 3,
+};
+
 const testData2Map: Array<string> = ["A", "A", "B", "C"];
+const testData3Map: Array<string> = ["A", "B", "C"];
+const testData3MapNonGCD: Array<string> = [
+  "A",
+  "A",
+  "A",
+  "B",
+  "B",
+  "B",
+  "C",
+  "C",
+  "C",
+];
 
 const nonObjectArray: Array<any> = [123, [], () => {}, null];
 
@@ -41,4 +59,20 @@ test("wrand should return the probability map when requested", () => {
   // which means we are testing the shuffle flag too
   const result = wrand(testData2, 0, true);
   expect(result).toEqual(testData2Map);
+});
+
+test("wrand should skip GCD when requested", () => {
+  const resultWithGCD = wrand(testData3, 0, true); // GCD is on by default
+  const resultWithoutGCD = wrand(testData3, 0, true, false); // GCD off
+  expect(resultWithGCD).toEqual(testData3Map);
+  expect(resultWithoutGCD).toEqual(testData3MapNonGCD);
+});
+
+test("wrand shuffles the map at least once when requested", () => {
+  const result = wrand(testData2, 1, true) as Array<string>;
+  // should not be equal, because it is shuffled
+  expect(result).not.toEqual(testData2Map);
+  // sort and then check equality to make sure it was indeed
+  // the expected map
+  expect(result.sort()).toEqual(testData2Map);
 });
