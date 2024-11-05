@@ -16,7 +16,8 @@
   "license": "MIT License",
   "description": "",
   "dependencies": {
-    "count-decimals": "1.0.0",
+    "count-decimals": "^1.0.0",
+    "fast-shuffle": "^6.1.1",
     "mathjs": "^13.2.0"
   },
   "devDependencies": {

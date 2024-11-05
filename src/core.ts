@@ -1,6 +1,7 @@
 // -- core functionality, types and utility functions
 import { countDecimals } from "count-decimals";
 import { gcd } from "mathjs";
+import { shuffle as fastShuffle } from "fast-shuffle";
 import { isObject } from "./utils";
 
 /**
@@ -21,13 +22,22 @@ export type Weights = {
  * probabilities.
  *
  * @param {Weights} weights - ID and probability object
- * @param {boolean} applyGCD - Apply GCD optimisation, true by default
- * @returns {string|boolean} - A valid key from the weights argument
+ * @param {number} shuffle - Number of probability map shuufles,
+ * defualt is 1
+ * @param {boolean} mapOnly - Return the probability map instead of item,
+ * false by default
+ * @param {boolean} applyGCD - Apply GCD optimisation,
+ * true by default
+ * @returns {string|boolean|Array<string>} - A valid key from the weights
+ * argument,a boolean value of false indicating errors or an array of strings
+ * as the probability map
  */
 export function wrand(
   weights: Weights,
+  shuffle: number = 1,
+  mapOnly: boolean = false,
   applyGCD: boolean = true
-): string | boolean {
+): string | boolean | Array<string> {
   // - only accept an Object as the weights argument
   if (!isObject(weights)) {
     return false;
@@ -121,7 +131,6 @@ export function wrand(
   if (applyGCD) {
     // - spreading the weights...
     const weightsGCD: number = gcd(...Object.values(updatedWeights));
-    console.log("gcd:", weightsGCD);
     // - checking for undefined
     // - GCD greater than 1
     // - and GCD being a whole number, otherwise we will get
@@ -149,8 +158,9 @@ export function wrand(
   //   results in the following probability map:
   //   [a, a, b, c]
 
-  // - probability map
-  const probMap: Array<string> = [];
+  // - probability map variable, we may reassign this
+  //   variable when performing a shuffle
+  let probMap: Array<string> = [];
   // - looping through weights by their IDs
   ids.forEach((id) => {
     // - store the weight value somewhere we can change
@@ -164,10 +174,44 @@ export function wrand(
     }
   });
 
-  console.log("highest precision:", highestPrecision);
-  console.log("updated weights:", updatedWeights);
-  console.log("weights total:", weightsTotal);
-  // console.log("prob map:", probMap);
+  // - shuffling the probability map could help with
+  //   picking a better random value
+  // - the argument value could be 0 or higher. if the
+  //   value is set to 0, the following block will get
+  //   skipped by default.
 
-  return "pass";
+  // - loop for the number of shuffles, passed via arguments
+  for (let s = 0; s < shuffle; s++) {
+    // - shuffle and reassign to the probability map variable
+    probMap = fastShuffle(probMap);
+  }
+
+  // - in some case we may only be interested in getting the
+  //   produced probability map
+  // - if mapOnly is set to true, then return early here
+  if (mapOnly) {
+    return probMap;
+  }
+
+  // - time to pick a pseudo-random element from the probability map
+  // - in order to pick a random valid index, we use min/max values
+  // - min is set to 0
+  // - max is set to the length of our probability map array, minus 1
+  const randMin = 0;
+  const randMax = probMap.length - 1;
+  const randIndex = Math.floor(
+    Math.random() * (randMax - randMin + 1) + randMin
+  );
+  // - our randomly chosen item from the probability map
+  // - this item represents an ID from our original weights
+  //   object, passed via function arguments
+  const randProbability: string = probMap[randIndex];
+
+  // - check to make sure our randIndex is indeed valie
+  if (randProbability) {
+    return randProbability;
+  }
+
+  // - return false here to indicate something has gone wrong
+  return false;
 }
