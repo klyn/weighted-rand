@@ -1,4 +1,3 @@
-// -- core functionality, types and utility functions
 import { countDecimals } from "count-decimals";
 import { gcd } from "mathjs";
 import { shuffle as fastShuffle } from "fast-shuffle";
