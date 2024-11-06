@@ -1,6 +1,6 @@
 # Weighted Pseudo-Random Functions
 
-The `weighted-rand` a TypeScript package that provides a set of functions -- and soon classes, that aim to provide an easy way for picking a pseudo-random item from a set, where each item has a probability of being picked, relative to the other items in the set.
+The `weighted-rand` is a TypeScript package that provides a set of functions -- and soon classes, that aim to provide an easy way for picking a pseudo-random item from a set, where each item has a probability of being picked, relative to the other items in the set.
 
 For example, imagine the follow set of weighted-probabilities:
 
