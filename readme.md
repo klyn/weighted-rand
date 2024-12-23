@@ -1,6 +1,6 @@
 # Weighted Pseudo-Random Functions
 
-The `weighted-rand` is a TypeScript package that provides a set of functions -- and soon classes, that aim to provide an easy way for picking a pseudo-random item from a set, where each item has a probability of being picked, relative to the other items in the set.
+The `@klyn/weighted-rand` is a TypeScript package that provides a set of functions -- and soon classes, that aim to provide an easy way for picking a pseudo-random item from a set, where each item has a probability of being picked, relative to the other items in the set.
 
 For example, imagine the follow set of weighted-probabilities:
 
@@ -24,12 +24,12 @@ The functions in this package can be used both in the browser and within the Nod
 ## Installation
 
 **NPM**
-`npm install weighted-rand`
+`npm install @klyn/weighted-rand`
 
 ## Import
 
 **Node.js**
-`import { wrand, wbp } from  "weighted-rand";`
+`import { wrand, wbp } from  "@klyn/weighted-rand";`
 
 # API
 
@@ -39,7 +39,7 @@ This is the TypeScript data type that must be used for providing the list of wei
 
 ```
 // TypeScript, Node
-import { Weights } from "weighted-rand";
+import { Weights } from "@klyn/weighted-rand";
 
 const weights: Weights = { A: 0.5, B: 0.8 };
 
@@ -55,14 +55,14 @@ Weighted-random function returns a randomly chosen item from the provided list, 
 
 ```
 // TypeScript, Node
-import { wrand, Weights } from "weighted-rand";
+import { wrand, Weights } from "@klyn/weighted-rand";
 
 // 50% chance of a, 50% chance of b
 const weights: Weights = {a: 1, b: 1}
 const results = wrand(weights);
 
 // JavaScript, Node
-import { wrand } from "weighted-rand";
+import { wrand } from "@klyn/weighted-rand";
 
 const weights = {a: 1, b: 1};
 const results = wrand(weights);
@@ -83,7 +83,7 @@ The first argument is an arbitrary number, but in combination with the second ar
 
 ```
 // JavaScript
-import { wbp } from "weighted-rand";
+import { wbp } from "@klyn/weighted-rand";
 
 wbp(40, 120); // 0.333..3% chance of returning true
 ```
@@ -99,7 +99,7 @@ wbp(40, 120); // 0.333..3% chance of returning true
 ## Imports
 
 ```
-import { wrand, wbp, Weights } from "weighted-rand";
+import { wrand, wbp, Weights } from "@klyn/weighted-rand";
 ```
 
 ## Weighted Probabilities
